@@ -33,30 +33,30 @@ export const sidebarMenus = {
   ADMIN: [
     {
       title: "Dashboard",
-      url: "/admin/dashboard",
+      url: "/dashboard/admin",
       icon: Ticket,
       items: [
-        { title: "Overview", url: "/admin/dashboard" },
-        { title: "Reports", url: "/admin/reports" },
+        { title: "Overview", url: "/dashboard/admin" },
+        { title: "Reports", url: "/dashboard/admin/reports" },
       ],
     },
     {
       title: "Tickets Management",
-      url: "/admin/tickets",
+      url: "/dashboard/admin/tickets",
       icon: Ticket,
       items: [
-        { title: "All Tickets", url: "/admin/tickets" },
-        { title: "Unassigned", url: "/admin/tickets/unassigned" },
-        { title: "Resolved", url: "/admin/tickets/resolved" },
+        { title: "All Tickets", url: "/dashboard/admin/tickets" },
+        { title: "Unassigned", url: "/dashboard/admin/tickets/unassigned" },
+        { title: "Resolved", url: "/dashboard/admin/tickets/resolved" },
       ],
     },
     {
       title: "User Management",
-      url: "/admin/users",
+      url: "/dashboard/admin/users",
       icon: Settings,
       items: [
-        { title: "All Users", url: "/admin/users" },
-        { title: "Roles", url: "/admin/users/roles" },
+        { title: "All Users", url: "/dashboard/admin/users" },
+        { title: "Roles", url: "/dashboard/admin/users/roles" },
       ],
     },
   ],
