@@ -25,6 +25,10 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { getUserInitials } from "@/utils/get-initials"
+import { signOut } from "@/lib/auth-client"
+import { useUserStore } from "@/features/auth/stores/useUserStore"
+import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 export function NavUser({
   user,
@@ -35,8 +39,20 @@ export function NavUser({
     imageUrl?: string
   }
 }) {
+  const router = useRouter();
+
   const { isMobile } = useSidebar();
+
   const initialName = getUserInitials(user.name);
+
+  const { clearUser } = useUserStore();
+
+  const logout = () => {
+    signOut();
+    clearUser();
+    toast.success("Signed out successfully.");
+    router.replace("/sign-in");
+  }
 
   return (
     <SidebarMenu>
@@ -77,7 +93,7 @@ export function NavUser({
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => logout()}>
               <LogOut />
               Log out
             </DropdownMenuItem>
