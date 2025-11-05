@@ -23,7 +23,7 @@ export function useSignIn() {
 
                 toast.success("Signed in successfully");
                 
-                router.push("/");
+                router.push("/dashboard");
             } else {
                 toast.error(res.error.message)
             }
