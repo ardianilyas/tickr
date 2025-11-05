@@ -1,70 +1,54 @@
 'use client'
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signUpSchema, SignUpSchema } from '../schemas/auth.schema';
-import { useMutation } from '@tanstack/react-query';
-import { signUp } from '@/lib/auth-client';
-import { toast } from 'sonner';
-import { TRPCError } from '@trpc/server';
 import { useForm } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
+import { useSignUp } from '../hooks/useSignUp';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import InputError from '@/components/InputError';
+import Link from 'next/link';
+import AuthTitle from '../components/AuthTitle';
+import AuthSubtitle from '../components/AuthSubtitle';
 
 export default function SignUpForm() {
-    const router = useRouter();
-
     const { register, handleSubmit, formState: { errors } } = useForm<SignUpSchema>({
         resolver: zodResolver(signUpSchema),
     });
 
-    const mutation = useMutation({
-        mutationFn: (data: SignUpSchema) => signUp.email(data),
-        onSuccess: (res) => {
-            if (!res.error) {
-                toast.success("Signed up successfully, please signin to continue.");
-                router.push("/sign-in");
-            } else {
-                toast.error(res.error.message)
-            }
-        },
-        onError: (error: any) => {
-            if (error instanceof TRPCError) {
-                toast.error(error.message)
-            } else {
-                toast.error("Error signing in.")
-            }
-        },
-    });
+    const { mutate, isPending } = useSignUp()
 
     const onSubmit = (data: SignUpSchema) => {
-        mutation.mutate(data);
+        mutate(data);
     }
 
     return (
         <div>
-            <h1>Sign Up Form</h1>
-            <p>Lorem ipsum dolor sit amet consectetur.</p>
+            <AuthTitle>Join the Ticketing System</AuthTitle>
+            <AuthSubtitle>Report, track, and collaborate — all from one dashboard.</AuthSubtitle>
 
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} className="mt-3 w-full [&>div]:mb-3">
                 <div>
-                    <label htmlFor="name">Username</label>
-                    <input type="text" {...register("name")} />
-                    {errors.name && <p className='text-red-500'>{errors.name.message}</p>}
+                    <Label htmlFor="name">Username</Label>
+                    <Input type="text" {...register("name")} placeholder='Tickr Team' className={errors.name ? "border-red-600" : ""} />
+                    {errors.name && <InputError message={errors.name.message} />}
                 </div>
                 <div>
-                    <label htmlFor="email">Email</label>
-                    <input type="email" {...register("email")} />
-                    {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
+                    <Label htmlFor="email">Email</Label>
+                    <Input type="email" {...register("email")} placeholder='team@tickr.com' className={errors.email ? "border-red-600" : ""} />
+                    {errors.email && <InputError message={errors.email.message} />}
                 </div>
                 <div>
-                    <label htmlFor="password">Password</label>
-                    <input type="password" {...register("password")} />
-                    {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
+                    <Label htmlFor="password">Password</Label>
+                    <Input type="password" {...register("password")} placeholder='********' className={errors.password ? "border-red-600" : ""} />
+                    {errors.password && <InputError message={errors.password.message} />}
                 </div>
                 <div>
-                    <button type="submit">Sign Up</button>
+                    <Button className="w-full inline-flex" disabled={isPending} type="submit">Sign Up</Button>
                 </div>
             </form>
+            <p className="text-neutral-600 leading-relaxed">Already have an account ? <Link href={"/sign-in"} className="text-blue-400 hover:text-blue-500 underline underline-offset-2">sign in here</Link> </p>
         </div>
     )
 }
