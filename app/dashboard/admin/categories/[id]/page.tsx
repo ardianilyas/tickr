@@ -1,4 +1,3 @@
-// "use client"
 
 import DashboardSubtitle from "@/components/dashboard/Subtitle";
 import DashboardTitle from "@/components/dashboard/Title";
