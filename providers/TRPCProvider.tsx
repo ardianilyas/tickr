@@ -16,8 +16,11 @@ export function TRPCProvider({ children }: { children: ReactNode }) {
             }),
             defaultOptions: {
                 queries: {
+                    staleTime: 1000 * 60 * 5,
+                    gcTime: 1000 * 60 * 10,
                     retry: false,
-                    refetchOnWindowFocus: false
+                    refetchOnWindowFocus: false,
+                    refetchOnReconnect: true,
                 },
             },
         });
