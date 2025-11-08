@@ -1,4 +1,4 @@
-import { Ticket, PlusCircle, BookOpen, Settings } from "lucide-react";
+import { Ticket, PlusCircle, Settings } from "lucide-react";
 
 export const sidebarMenus = {
   USER: [
@@ -9,24 +9,6 @@ export const sidebarMenus = {
       items: [
         { title: "My Tickets", url: "/tickets" },
         { title: "Create Ticket", url: "/tickets/new", icon: PlusCircle },
-      ],
-    },
-    {
-      title: "Knowledge Base",
-      url: "/kb",
-      icon: BookOpen,
-      items: [
-        { title: "FAQs", url: "/kb/faqs" },
-        { title: "Guides", url: "/kb/guides" },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "/settings",
-      icon: Settings,
-      items: [
-        { title: "Profile", url: "/settings/profile" },
-        { title: "Preferences", url: "/settings/preferences" },
       ],
     },
   ],
@@ -41,7 +23,7 @@ export const sidebarMenus = {
       ],
     },
     {
-      title: "Tickets Management",
+      title: "Tickets",
       url: "/dashboard/admin/tickets",
       icon: Ticket,
       items: [
@@ -51,7 +33,15 @@ export const sidebarMenus = {
       ],
     },
     {
-      title: "User Management",
+      title: "Categories",
+      url: "/dashboard/admin/categories",
+      icon: Ticket,
+      items: [
+        { title: "Categories", url: "/dashboard/admin/categories" },
+      ],
+    },
+    {
+      title: "Users",
       url: "/dashboard/admin/users",
       icon: Settings,
       items: [
