@@ -1,28 +1,18 @@
-import { prisma } from "@/lib/db/prisma";
 import { CreateCategorySchema, EditCategorySchema } from "../schema/categories.schema";
+import { adminCategoryRepository } from "../repositories/adminCategoryRepository";
 
 export async function getAllCategories() {
-    return await prisma.category.findMany({ orderBy: { createdAt: "desc" } });
+    return await adminCategoryRepository.getAllCategories();
 }
 
 export async function createCategory(data: CreateCategorySchema) {
-    return await prisma.category.create({
-        data,
-    });
+    return await adminCategoryRepository.createCategory(data);
 }
 
 export async function getCategory(id: string) {
-    return await prisma.category.findUnique({
-        where: { id },
-    });
+    return await adminCategoryRepository.getCategory(id);
 }
 
 export async function updateCategory(data: EditCategorySchema & { id: string }) {
-    return await prisma.category.update({ 
-        data: {
-            name: data.name,
-            description: data.description
-        },
-        where: { id: data.id },
-    })
+    return await adminCategoryRepository.updateCategory(data);
 }
