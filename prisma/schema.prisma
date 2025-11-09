@@ -19,6 +19,13 @@ enum Role {
   ADMIN
 }
 
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
 model User {
   id            String    @id
   name          String
@@ -30,6 +37,9 @@ model User {
   updatedAt     DateTime  @default(now()) @updatedAt
   sessions      Session[]
   accounts      Account[]
+
+  createdTickets  Ticket[]  @relation("CreatedTickets")
+  assignedTickets Ticket[]  @relation("AssignedTickets")
 
   @@unique([email])
   @@map("user")
@@ -84,8 +94,32 @@ model Category {
   id          String    @id @default(uuid())
   name        String    @unique
   description String
+
+  tickets     Ticket[]
+
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @default(now()) @updatedAt
 
   @@map("categories")
+}
+
+model Ticket {
+  id                String        @id @default(uuid())
+  title             String
+  description       String
+  status            TicketStatus  @default(OPEN)
+
+  categoryId        String
+  category          Category      @relation(fields: [categoryId], references: [id])
+
+  creatorId         String
+  creator           User          @relation("CreatedTickets", fields: [creatorId], references: [id])
+
+  assignedId        String?
+  assigned          User?         @relation("AssignedTickets", fields: [assignedId], references: [id])
+
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @default(now()) @updatedAt
+
+  @@map("tickets")
 }
