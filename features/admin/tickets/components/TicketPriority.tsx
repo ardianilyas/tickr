@@ -23,7 +23,7 @@ export default function TicketPriority({ priority }: Props) {
   return (
     <p
         className={clsx(
-            "inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium capitalize",
+            "inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium capitalize",
             PRIORITY_STYLES[priority]
         )}
     >
