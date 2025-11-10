@@ -28,8 +28,10 @@ export const sidebarMenus = {
       icon: Ticket,
       items: [
         { title: "All Tickets", url: "/dashboard/admin/tickets" },
-        { title: "Unassigned", url: "/dashboard/admin/tickets/unassigned" },
-        { title: "Resolved", url: "/dashboard/admin/tickets/resolved" },
+        { title: "Open", url: "/dashboard/admin/tickets/status/open" },
+        { title: "In Progress", url: "/dashboard/admin/tickets/status/in_progress" },
+        { title: "Resolved", url: "/dashboard/admin/tickets/status/resolved" },
+        { title: "Closed", url: "/dashboard/admin/tickets/status/closed" },
       ],
     },
     {
