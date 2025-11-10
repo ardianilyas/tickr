@@ -3,16 +3,18 @@
 import { trpc, trpcClientOptions } from "@/lib/trpc/client";
 import { handleTrpcError } from "@/lib/trpc/trpcErrorHandler";
 import { MutationCache, QueryCache, QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { ReactNode, useState } from "react";
 
 export function TRPCProvider({ children }: { children: ReactNode }) {
+    const router = useRouter();
     const [queryClient] = useState(() => {
         const qc = new QueryClient({
             queryCache: new QueryCache({
-                onError: (error) => handleTrpcError(error),
+                onError: (error) => handleTrpcError(error, router),
             }),
             mutationCache: new MutationCache({
-                onError: (error) => handleTrpcError(error),
+                onError: (error) => handleTrpcError(error, router),
             }),
             defaultOptions: {
                 queries: {

@@ -1,5 +1,6 @@
 import { CreateCategorySchema, EditCategorySchema } from "../schema/categories.schema";
 import { adminCategoryRepository } from "../repositories/adminCategoryRepository";
+import { TRPCError } from "@trpc/server";
 
 export async function getAllCategories() {
     return await adminCategoryRepository.getAllCategories();
@@ -10,7 +11,16 @@ export async function createCategory(data: CreateCategorySchema) {
 }
 
 export async function getCategory(id: string) {
-    return await adminCategoryRepository.getCategory(id);
+    const category = await adminCategoryRepository.getCategory(id);
+
+    if (!category) {
+        throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Category not found",
+        });
+    };
+
+    return category;
 }
 
 export async function updateCategory(data: EditCategorySchema & { id: string }) {
