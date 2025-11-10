@@ -26,6 +26,13 @@ enum TicketStatus {
   CLOSED
 }
 
+enum TicketPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
 model User {
   id            String    @id
   name          String
@@ -104,22 +111,23 @@ model Category {
 }
 
 model Ticket {
-  id                String        @id @default(uuid())
+  id                String          @id @default(uuid())
   title             String
   description       String
-  status            TicketStatus  @default(OPEN)
+  status            TicketStatus    @default(OPEN)
+  priority          TicketPriority  @default(LOW)
 
   categoryId        String
-  category          Category      @relation(fields: [categoryId], references: [id])
+  category          Category        @relation(fields: [categoryId], references: [id])
 
   creatorId         String
-  creator           User          @relation("CreatedTickets", fields: [creatorId], references: [id])
+  creator           User            @relation("CreatedTickets", fields: [creatorId], references: [id])
 
   assignedId        String?
-  assigned          User?         @relation("AssignedTickets", fields: [assignedId], references: [id])
+  assigned          User?           @relation("AssignedTickets", fields: [assignedId], references: [id])
 
-  createdAt         DateTime      @default(now())
-  updatedAt         DateTime      @default(now()) @updatedAt
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @default(now()) @updatedAt
 
   @@map("tickets")
 }

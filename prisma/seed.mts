@@ -1,4 +1,4 @@
-import { Role, TicketStatus } from '@/lib/generated/prisma/client'
+import { Role, TicketPriority, TicketStatus } from '@/lib/generated/prisma/client'
 import { faker } from '@faker-js/faker'
 import { prisma } from '@/lib/db/prisma'
 import 'dotenv/config'
@@ -57,10 +57,14 @@ async function main() {
     const statuses = [TicketStatus.OPEN, TicketStatus.IN_PROGRESS, TicketStatus.RESOLVED]
     const status = faker.helpers.arrayElement(statuses)
 
+    const priorities = [TicketPriority.LOW, TicketPriority.MEDIUM, TicketPriority.HIGH, TicketPriority.URGENT]
+    const priority = faker.helpers.arrayElement(priorities)
+
     return {
       title: faker.lorem.sentence(),
       description: faker.lorem.sentence(),
       status,
+      priority,
       creatorId: creator.id,
       assignedId: assignedTo.id,
       categoryId: category.id,
