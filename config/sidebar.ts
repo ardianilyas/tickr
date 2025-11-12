@@ -4,11 +4,10 @@ export const sidebarMenus = {
   USER: [
     {
       title: "Tickets",
-      url: "/tickets",
+      url: "/dashboard/tickets",
       icon: Ticket,
       items: [
-        { title: "My Tickets", url: "/tickets" },
-        { title: "Create Ticket", url: "/tickets/new", icon: PlusCircle },
+        { title: "My Tickets", url: "/dashboard/tickets" },
       ],
     },
   ],
