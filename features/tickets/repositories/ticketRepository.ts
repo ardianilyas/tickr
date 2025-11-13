@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/db/prisma"
-import { CreateTicketSchema } from "../schemas/ticketSchema";
+import { CreateTicketSchema, EditTicketSchema } from "../schemas/ticketSchema";
 
 export const ticketRepository = {
     async getTicketsByUserId (userId: string) {
@@ -7,6 +7,10 @@ export const ticketRepository = {
             where: { creatorId: userId },
             orderBy: { createdAt: "desc" },
         });
+    },
+
+    async getTicketById(id: string) {
+        return await prisma.ticket.findUnique({ where: { id } });
     },
 
     async getcategories() {
@@ -20,5 +24,12 @@ export const ticketRepository = {
                 creatorId: userId
             }
         })
+    },
+
+    async updateTicket(id: string, data: EditTicketSchema) {
+        return await prisma.ticket.update({
+            where: { id },
+            data
+        });
     }
 }

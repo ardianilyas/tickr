@@ -31,6 +31,7 @@ export default function Tickets() {
                                             <TableHead>Description</TableHead>
                                             <TableHead>Status</TableHead>
                                             <TableHead>Priority</TableHead>
+                                            <TableHead>Actions</TableHead>
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
@@ -44,6 +45,11 @@ export default function Tickets() {
                                                 </TableCell>
                                                 <TableCell>
                                                     <TicketPriority priority={ticket.priority} />
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Link href={`/dashboard/tickets/${ticket.id}`}>
+                                                        Edit
+                                                    </Link>
                                                 </TableCell>
                                             </TableRow>
                                         ))}
