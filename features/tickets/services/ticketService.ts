@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ticketRepository } from "../repositories/ticketRepository"
 import { CreateTicketSchema, EditTicketSchema } from "../schemas/ticketSchema";
+import { TRPCError } from "@trpc/server";
 
 export const ticketService = {
     async getTicketByUserId (userId: string) {
@@ -7,7 +9,9 @@ export const ticketService = {
     },
 
     async getTicketById(id: string) {
-        return await ticketRepository.getTicketById(id);
+        const ticket = await ticketRepository.getTicketById(id);
+        if (!ticket) throw new TRPCError({ code: "NOT_FOUND", message: "Ticket not found" });
+        return ticket;
     },
 
     async getCategories() {
@@ -19,6 +23,20 @@ export const ticketService = {
     },
 
     async updateTicket(id: string, data: EditTicketSchema) {
-        return await ticketRepository.updateTicket(id, data);
+        try {
+            await ticketRepository.updateTicket(id, data);
+        } catch (error: any) {
+            if (error.code === "P2025") throw new TRPCError({ code: "NOT_FOUND", message: "Ticket not found" });
+            throw error;
+        }
+    },
+
+    async deleteTicketById(id: string) {
+        try {
+            await ticketRepository.deleteTicketById(id);
+        } catch (error: any) {
+            if (error.code === "P2025") throw new TRPCError({ code: "NOT_FOUND", message: "Ticket not found" });
+            throw error;
+        }
     }
 }

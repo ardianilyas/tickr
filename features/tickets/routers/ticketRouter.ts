@@ -1,6 +1,6 @@
 import { authProcedure, router } from "@/server/trpc/trpc";
 import { ticketService } from "../services/ticketService";
-import { createTicketSchema, editTicketSchema, getTicketByIdSchema } from "../schemas/ticketSchema";
+import { createTicketSchema, deleteTicketByIdSchema, editTicketSchema, getTicketByIdSchema } from "../schemas/ticketSchema";
 import z from "zod";
 
 export const ticketRouter = router({
@@ -20,5 +20,8 @@ export const ticketRouter = router({
         id: z.string(),
     })).mutation(async ({ input }) => {
         return await ticketService.updateTicket(input.id, input);
+    }),
+    deleteTicketById: authProcedure.input(deleteTicketByIdSchema).mutation(async ({ input }) => {
+        return await ticketService.deleteTicketById(input.id);
     }),
 })

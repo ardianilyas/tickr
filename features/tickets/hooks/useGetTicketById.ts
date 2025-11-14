@@ -5,8 +5,9 @@ export function useGetTicketById(id: string) {
         { id },
         {
             enabled: !!id,
-            refetchOnMount: true,         
-            refetchOnWindowFocus: false,  
+            refetchOnMount: "always",
+            refetchOnWindowFocus: true,
+            refetchOnReconnect: true, 
             staleTime: 0,                 
         }
     );

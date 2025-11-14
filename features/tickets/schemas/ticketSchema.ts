@@ -8,6 +8,10 @@ export const createTicketSchema = z.object({
     categoryId: z.string()
 });
 
+export const getTicketByUserIdSchema = z.object({
+    id: z.string(),
+});
+
 export const getTicketByIdSchema = z.object({
     id: z.string(),
 });
@@ -17,6 +21,10 @@ export const editTicketSchema = z.object({
     description: z.string().min(1, "Description is required"),
     priority: z.enum(TicketPriority),
     categoryId: z.string()
+});
+
+export const deleteTicketByIdSchema = z.object({
+    id: z.string(),
 });
 
 export type CreateTicketSchema = z.infer<typeof createTicketSchema>;

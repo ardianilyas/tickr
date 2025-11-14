@@ -7,9 +7,17 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 import TicketStatus from "@/features/admin/tickets/components/TicketStatus";
 import TicketPriority from "@/features/admin/tickets/components/TicketPriority";
 import { Card, CardContent } from "@/components/ui/card";
+import { useDeleteTicketById } from "../hooks/useDeleteTicketById";
 
 export default function Tickets() {
     const { data: tickets, isLoading } = useGetTicketsByUserId(); 
+
+    const { mutateAsync, isPending } = useDeleteTicketById();
+
+    const onDeleteTicket = async (id: string) => {
+       await mutateAsync({ id });
+    };
+
     return (
         <div className="mt-6">
             <Link href="/dashboard/tickets/create">
@@ -50,6 +58,9 @@ export default function Tickets() {
                                                     <Link href={`/dashboard/tickets/${ticket.id}`}>
                                                         Edit
                                                     </Link>
+                                                    <Button disabled={isPending} onClick={() => onDeleteTicket(ticket.id)} variant="link">
+                                                        Delete
+                                                    </Button>
                                                 </TableCell>
                                             </TableRow>
                                         ))}
