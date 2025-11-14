@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { PrismaErrorCode } from "@/constants/prisma";
 import { ticketRepository } from "../repositories/ticketRepository"
 import { CreateTicketSchema, EditTicketSchema } from "../schemas/ticketSchema";
 import { TRPCError } from "@trpc/server";
@@ -26,7 +27,7 @@ export const ticketService = {
         try {
             await ticketRepository.updateTicket(id, data);
         } catch (error: any) {
-            if (error.code === "P2025") throw new TRPCError({ code: "NOT_FOUND", message: "Ticket not found" });
+            if (error.code === PrismaErrorCode.NotFound) throw new TRPCError({ code: "NOT_FOUND", message: "Ticket not found" });
             throw error;
         }
     },
@@ -35,7 +36,7 @@ export const ticketService = {
         try {
             await ticketRepository.deleteTicketById(id);
         } catch (error: any) {
-            if (error.code === "P2025") throw new TRPCError({ code: "NOT_FOUND", message: "Ticket not found" });
+            if (error.code === PrismaErrorCode.NotFound) throw new TRPCError({ code: "NOT_FOUND", message: "Ticket not found" });
             throw error;
         }
     }
