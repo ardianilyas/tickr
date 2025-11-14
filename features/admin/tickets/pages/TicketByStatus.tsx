@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import TicketStatus from "../components/TicketStatus";
 import TicketPriority from "../components/TicketPriority";
+import Link from "next/link";
 
 export default function TicketByStatus({ status }: { status: TicketStatusType }) {
     const { data: tickets, isLoading } = useGetTicketByStatus(status);
@@ -30,7 +31,13 @@ export default function TicketByStatus({ status }: { status: TicketStatusType })
                                 {tickets.map((ticket, index) => (
                                     <TableRow key={ticket.id}>
                                         <TableCell>{index + 1}</TableCell>
-                                        <TableCell>{ticket.title}</TableCell>
+                                        <TableCell>
+                                            <Link className="text-blue-400 hover:underline" href={`/dashboard/admin/tickets/${ticket.id}`}>
+                                                <p className="truncate w-64">
+                                                    {ticket.title}
+                                                </p>
+                                            </Link>
+                                        </TableCell>
                                         <TableCell>
                                             <TicketStatus status={ticket.status} />
                                         </TableCell>

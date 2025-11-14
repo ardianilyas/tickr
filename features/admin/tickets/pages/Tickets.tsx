@@ -26,7 +26,6 @@ export default function Tickets() {
                                     <TableHead>Description</TableHead>
                                     <TableHead>Priority</TableHead>
                                     <TableHead>Status</TableHead>
-                                    <TableHead>Actions</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
@@ -34,7 +33,7 @@ export default function Tickets() {
                                     <TableRow key={ticket.id}>
                                         <TableCell>{index + 1}</TableCell>
                                         <TableCell>
-                                            <Link href={`/dashboard/admin/tickets/${ticket.id}`}>
+                                            <Link className="text-blue-400 hover:underline" href={`/dashboard/admin/tickets/${ticket.id}`}>
                                                 <p className="truncate w-64">
                                                     {ticket.title}
                                                 </p>
@@ -50,9 +49,6 @@ export default function Tickets() {
                                         </TableCell>
                                         <TableCell>
                                             <TicketStatus status={ticket.status} />
-                                        </TableCell>
-                                        <TableCell>
-                                            
                                         </TableCell>
                                     </TableRow>
                                 ))}
