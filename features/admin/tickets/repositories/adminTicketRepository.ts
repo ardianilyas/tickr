@@ -31,9 +31,9 @@ export const adminTicketRepository = {
         });
     },
 
-    async updateTicketStatus(id: string, status: TicketStatus) {
+    async updateTicketStatus(id: string, status: TicketStatus, assignedId: string) {
         return await prisma.ticket.update({
-            data: { status },
+            data: { status, assignedId },
             where: { id },
         })
     },
